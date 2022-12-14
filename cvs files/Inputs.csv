@@ -1,0 +1,9 @@
+,variable,value
+0,root_path,c:\\python\\stocks\\
+1,portfolio_path,c:\\python\\stocks\\Portfolio Input\\
+2,portfolio_file,portfolio - DMA.csv
+3,output_path,c:\\python\\stocks\\Portfolio Output\\
+4,refresh_tickers,No
+5,refresh_dividends,No
+6,portfolio_plot,Yes
+7,individual_plot,Yes
