@@ -2,11 +2,11 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import pandas as pd
 
-portfolio_path = 'C:\\Python\\PythonProjects\\stock-tracker-v2\\cvs files\\Input Files\\'
-portfolio_file = 'Portfolio - FAANG.csv'
+#portfolio_path = 'C:\\Python\\PythonProjects\\stock-tracker-v2\\cvs files\\Input Files\\'
+#portfolio_file = 'Portfolio - FAANG.csv'
+portfolio_path = 'C:\\Python\\stocks\\Portfolio Input\\'
+portfolio_file = 'Portfolio - DMA.csv'
 output_path = 'C:\\Python\\PythonProjects\\stock-tracker-v2\\cvs files\\Output Files\\'
-ma_list = {'21', '50', '200'}
-benchmark = '^GSPC'
 
 df_sp500 = pd.read_csv(f'{output_path}^GSPC.csv')
 
@@ -17,38 +17,9 @@ def tickers_list(in_path, file):
     return df_pe  # Convert the stocks in the portfolio to a list of tickers
 
 
-def moving_average(out_path, tick, duration):  # Calculate the moving average from closing price and a defined duration
-    df_ma = pd.read_csv(f'{out_path}{tick}.csv')
-    df_ma[f'{duration}-dma'] = df_ma[f'Close'].rolling(window=duration).mean()
-    df_ma = df_ma.drop(df_ma.columns[[0]], axis=1)
-    df_ma = df_ma.drop(['Unnamed'], axis=1, errors='ignore')
-    df_ma.to_csv(f'{out_path}{tick}.csv')
-    return ()
-
-
-def relative_performance(out_path, tick, bm):  # Calculate performance vs benchmark
-    df_rp = pd.read_csv(f'{out_path}{tick}.csv')
-    df_bm = pd.read_csv(f'{out_path}{bm}.csv')
-    df_rp[f'{bm}_rel'] = (df_rp[f'Close'] / df_bm['Close'])
-    df_rp[f'{bm}_rel_%'] = (df_rp[f'Close'] / df_rp['Close'].iat[0]) / (df_bm['Close'] / df_bm['Close'].iat[0])
-    df_rp = df_rp.drop(df_rp.columns[[0]], axis=1)
-    df_rp.to_csv(f'{out_path}{tick}.csv')
-    return ()
-
-
 tickers = tickers_list(portfolio_path, portfolio_file)
 
-
 for ticker in tickers:
-    print(ticker)
-    # Calculate moving average
-    for days in ma_list:
-        moving_average(output_path, ticker, int(days))
-        print(days)
-    # Calculate relative performance vs benchmark
-    relative_performance(output_path, ticker, benchmark)
-    print('Relative Performance')
-
     fig = make_subplots(rows=2, cols=1, row_heights=[0.8, 0.2],
                         specs=[[{"secondary_y": True}],
                                [{"secondary_y": True}]],

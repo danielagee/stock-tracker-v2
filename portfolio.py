@@ -13,8 +13,10 @@ import time
 import yfinance as yf
 import numpy as np
 
-portfolio_path = 'C:\\Python\\PythonProjects\\stock-tracker-v2\\cvs files\\Input Files\\'
-portfolio_file = 'Portfolio - FAANG.csv'
+# portfolio_path = 'C:\\Python\\PythonProjects\\stock-tracker-v2\\cvs files\\Input Files\\'
+# portfolio_file = 'Portfolio - FAANG.csv'
+portfolio_path = 'C:\\Python\\stocks\\Portfolio Input\\'
+portfolio_file = 'Portfolio - DMA.csv'
 output_path = 'C:\\Python\\PythonProjects\\stock-tracker-v2\\cvs files\\Output Files\\'
 pre_trade_look = 30
 backward_look = 0
