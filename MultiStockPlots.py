@@ -6,7 +6,8 @@ import pandas as pd
 # portfolio_file = 'Portfolio - FAANG.csv'
 portfolio_path = 'C:\\Python\\stocks\\Portfolio Input\\'
 portfolio_file = 'Portfolio - DMA.csv'
-output_path = 'C:\\Python\\PythonProjects\\stock-tracker-v2\\cvs files\\Output Files\\'
+output_path = 'C:\\Python\\stocks\\Portfolio Output\\'
+#output_path = 'C:\\Python\\PythonProjects\\stock-tracker-v2\\cvs files\\Output Files\\'
 
 df_sp500 = pd.read_csv(f'{output_path}^GSPC.csv')
 

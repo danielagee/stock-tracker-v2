@@ -4,14 +4,14 @@ import pandas as pd
 
 # portfolio_path = 'C:\\Python\\PythonProjects\\stock-tracker-v2\\cvs files\\Input Files\\'
 portfolio_path = 'C:\\Python\\stocks\\Portfolio Input\\'
+
 # portfolio_file = 'Portfolio - FAANG.csv'
 # portfolio_file = 'Portfolio - DMA.csv'
-portfolio_file = 'Portfolio - Potential Purchase Evaluation.csv'
+# portfolio_file = 'Portfolio - Potential Purchase Evaluation.csv'
+portfolio_file = 'Portfolio - Potential Purchase Evaluation - Short.csv'
 
 # output_path = 'C:\\Python\\PythonProjects\\stock-tracker-v2\\cvs files\\Output Files\\'
 output_path = 'C:\\Python\\stocks\\Portfolio Output\\'
-
-df_sp500 = pd.read_csv(f'{output_path}^GSPC.csv')
 
 
 def tickers_list(in_path, file):
@@ -20,9 +20,7 @@ def tickers_list(in_path, file):
     return df_pe  # Convert the stocks in the portfolio to a list of tickers
 
 
-tickers = tickers_list(portfolio_path, portfolio_file)
-
-for ticker in tickers:
+def build_plot():
     fig = make_subplots(rows=2, cols=1, row_heights=[0.8, 0.2],
                         specs=[[{"secondary_y": True}],
                                [{"secondary_y": True}]],
@@ -31,7 +29,7 @@ for ticker in tickers:
     fig.update_xaxes(title_text="Date", row=2, col=1)
     fig.update_yaxes(title_text="Stock Price (USD)", row=1, col=1)
     fig.update_yaxes(title_text=f'Value Performance of {ticker} vs S&P 500', secondary_y=True, row=1, col=1)
-    #fig.update_yaxes(title_text='Dividends Received (USD)', row=2, col=1)
+    # fig.update_yaxes(title_text='Dividends Received (USD)', row=2, col=1)
     fig.update_yaxes(title_text=f'Returns %', secondary_y=False, row=2, col=1)
     fig.update_layout(xaxis_rangeslider_visible=False)
 
@@ -68,10 +66,29 @@ for ticker in tickers:
                    name="200-Day-MA"),
         secondary_y=False, row=1, col=1)
 
+    # Add portfolio value
+    fig.add_trace(
+        go.Scatter(x=df['Date'],
+                   y=df['portfolio_value'],
+                   line=dict(color='#a098ed'),
+                   name="Portfolio Value"),
+        secondary_y=True, row=1, col=1)
+
     start_date = "2022-01-01"
     end_date = "2023-03-01"
 
     fig.update_xaxes(type="date", range=[start_date, end_date])
+
+    fig.show()
+
+    return()
+
+
+tickers = tickers_list(portfolio_path, portfolio_file)
+
+for ticker in tickers:
+    build_plot()
+
 
     """"# Add trace for relative valuation compared to S&P500 index.
     fig.add_trace(
@@ -136,5 +153,3 @@ for ticker in tickers:
                    fillcolor='red'),
         secondary_y=False, row=2, col=1)
     """
-
-    fig.show()

@@ -14,16 +14,17 @@ import yfinance as yf
 import numpy as np
 
 # portfolio_path = 'C:\\Python\\PythonProjects\\stock-tracker-v2\\cvs files\\Input Files\\'
-# portfolio_file = 'Portfolio - FAANG.csv'
 portfolio_path = 'C:\\Python\\stocks\\Portfolio Input\\'
+# portfolio_file = 'Portfolio - FAANG.csv'
 portfolio_file = 'Portfolio - DMA.csv'
-output_path = 'C:\\Python\\PythonProjects\\stock-tracker-v2\\cvs files\\Output Files\\'
+# output_path = 'C:\\Python\\PythonProjects\\stock-tracker-v2\\cvs files\\Output Files\\'
+output_path = 'C:\\Python\\stocks\\Portfolio Output\\'
 pre_trade_look = 30
 backward_look = 0
 benchmarks = ['^GSPC', '^DJI', '^IXIC']
 rel_benchmark = '^GSPC'
 sum_headers = ('Value', 'Invested', 'Div Paid')
-ma_list = {'21', '50', '200'}
+ma_list = {21, 50, 200}
 
 
 def portfolio_extract(path, file):
@@ -154,7 +155,7 @@ def sum_columns(header_prefix, out_path):  # Create list of eaders to sum. forma
 
 
 df_portfolio = portfolio_extract(portfolio_path, portfolio_file)
-start_analysis = start_date(df_portfolio, pre_trade_look)
+start_analysis = datetime.datetime(1960, 1, 1) # start_date(df_portfolio, pre_trade_look)
 end_analysis = end_date(backward_look)
 tickers = ticker_list(df_portfolio)
 
@@ -167,13 +168,14 @@ for ticker in tickers:
     relative_performance(output_path, ticker, rel_benchmark)  # Calculate relative performance vs benchmark
 
 df_merged_value = create_merged(start_analysis)
-for ticker in tickers:
-    df_merged_value = merge_additional_ticker(output_path, ticker, df_merged_value)
-for header in sum_headers:
-    sum_columns(header, output_path)
+#print(df_merged_value)
+#for ticker in tickers:
+#    df_merged_value = merge_additional_ticker(output_path, ticker, df_merged_value)
+#for header in sum_headers:
+#    sum_columns(header, output_path)
 
-df_merged_value.replace(0, np.nan, inplace=True)  # Convert zero values in dividends paid column to NaN.
-df_merged_value[f'Total Div Paid'].fillna(method='pad', inplace=True)  # Fill dividends paid NaN from above
-df_merged_value['Returns'] = df_merged_value['Total Value'] - df_merged_value['Total Invested']
-df_merged_value['Returns %'] = df_merged_value['Returns'] / df_merged_value['Total Invested']*100
-df_merged_value.to_csv(f'{output_path}merged_value.csv')
+#df_merged_value.replace(0, np.nan, inplace=True)  # Convert zero values in dividends paid column to NaN.
+#df_merged_value[f'Total Div Paid'].fillna(method='pad', inplace=True)  # Fill dividends paid NaN from above
+#df_merged_value['Returns'] = df_merged_value['Total Value'] - df_merged_value['Total Invested']
+#df_merged_value['Returns %'] = df_merged_value['Returns'] / df_merged_value['Total Invested']*100
+#df_merged_value.to_csv(f'{output_path}merged_value.csv')
